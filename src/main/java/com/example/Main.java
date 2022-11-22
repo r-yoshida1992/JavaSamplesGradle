@@ -1,8 +1,12 @@
 package com.example;
 
-public class
-Main {
+import com.example.dummy.DummyLoadingText;
+
+public class Main {
+
+    private static final DummyLoadingText dummyLoadingText = new DummyLoadingText();
+
     public static void main(String[] args) {
-        System.out.println("hello");
+        dummyLoadingText.run();
     }
 }
