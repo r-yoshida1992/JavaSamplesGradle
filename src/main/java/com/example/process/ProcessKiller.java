@@ -18,24 +18,12 @@ public class ProcessKiller {
     }
 
     public static void run() {
-
-        ProcessManager manager = ProcessManager.getInstance();
-        // イメージ毎にmapを作成
-        Map<String, List<ProcessDto>> processMap = new TreeMap<>();
-        manager.getProcessList().forEach(e -> {
-            List<ProcessDto> current = processMap.getOrDefault(e.getName(), new ArrayList<>());
-            if (current.isEmpty()) {
-                processMap.put(e.getName(), current);
-            }
-            current.add(e);
-        });
-
         // 添え字付きでプロセス一覧を出力
+        Map<String, List<ProcessDto>> processMap = ProcessManager.getProcessMap();
         AtomicInteger index = new AtomicInteger();
         processMap.forEach((k, v) ->
                 System.out.printf("[%d] : %s : pid -> {%s}%n", index.getAndIncrement(), k,
                         v.stream().map(ProcessDto::getId).collect(Collectors.joining(","))));
-
         killProcess(processMap);
     }
 

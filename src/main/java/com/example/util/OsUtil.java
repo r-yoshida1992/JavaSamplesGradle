@@ -3,8 +3,9 @@ package com.example.util;
 import com.example.enums.OperationSystem;
 
 public class OsUtil {
+    static String osName = System.getProperty("os.name").toLowerCase();
+
     public static OperationSystem judgeOs() {
-        String osName = System.getProperty("os.name").toLowerCase();
         if (osName.startsWith("win")) {
             return OperationSystem.WINDOWS;
         } else if (osName.startsWith("mac")) {
@@ -13,6 +14,14 @@ public class OsUtil {
             return OperationSystem.LINUX;
         } else {
             throw new RuntimeException("Unsupported os.");
+        }
+    }
+
+    public static String getCharSet(){
+        if (judgeOs() == OperationSystem.WINDOWS) {
+            return "Shift-JIS";
+        } else {
+            return "UTF-8";
         }
     }
 

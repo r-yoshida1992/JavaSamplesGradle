@@ -3,6 +3,9 @@ package com.example.process.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 public final class ProcessDtoForMac extends ProcessDto {
@@ -37,5 +40,27 @@ public final class ProcessDtoForMac extends ProcessDto {
     public void setPid(String pid) {
         this.pid = pid;
         setId(pid);
+    }
+
+    public void setColumn(List<String> tmpList, int index, ProcessDto baseDto) {
+        ProcessDtoForMac dto = (ProcessDtoForMac) baseDto;
+        switch (index) {
+            case 0 -> dto.setUser(tmpList.get(index));
+            case 1 -> dto.setPid(tmpList.get(index));
+            case 2 -> dto.setCpu(tmpList.get(index));
+            case 3 -> dto.setMem(tmpList.get(index));
+            case 4 -> dto.setVsz(tmpList.get(index));
+            case 5 -> dto.setRss(tmpList.get(index));
+            case 6 -> dto.setTt(tmpList.get(index));
+            case 7 -> dto.setStat(tmpList.get(index));
+            case 8 -> dto.setStarted(tmpList.get(index));
+            case 9 -> dto.setTime(tmpList.get(index));
+            case 10 -> dto.setCommand(tmpList.get(index));
+        }
+    }
+
+    @Override
+    public List<ProcessDto> convertDtoList(Stream<String> stream) {
+        return ProcessDto.convertDtoListForMacOrLinux(stream);
     }
 }
