@@ -3,8 +3,6 @@ package com.example.process.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 public final class ProcessDtoForMac extends ProcessDto {
@@ -13,13 +11,13 @@ public final class ProcessDtoForMac extends ProcessDto {
     // プロセス番号
     private String pid;
     // CPU占有率
-    private BigDecimal cpu;
+    private String cpu;
     // 実メモリ占有率
-    private BigDecimal mem;
+    private String mem;
     // 仮想メモリ使用量(kb単位)
-    private BigDecimal vsz;
+    private String vsz;
     // 物理メモリ使用量(kb単位)
-    private BigDecimal rss;
+    private String rss;
     // 制御端末
     private String tt;
     // プロセスの状態

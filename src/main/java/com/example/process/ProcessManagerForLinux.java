@@ -1,7 +1,7 @@
 package com.example.process;
 
+import com.example.process.dto.ProcessDto;
 import com.example.process.dto.ProcessDtoForMac;
-import com.example.process.dto.ProcessDtoForWindows;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -72,7 +72,7 @@ public class ProcessManagerForLinux implements ProcessManager{
     }
 
     @Override
-    public List<ProcessDtoForWindows> getProcessList() {
+    public List<ProcessDto> getProcessList() {
         return null;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.process;
 
 import com.example.enums.OperationSystem;
-import com.example.process.dto.ProcessDtoForWindows;
+import com.example.process.dto.ProcessDto;
 import com.example.util.OsUtil;
 
 import java.util.List;
@@ -31,5 +31,5 @@ public interface ProcessManager {
         };
     }
 
-    List<ProcessDtoForWindows> getProcessList();
+    List<ProcessDto> getProcessList();
 }

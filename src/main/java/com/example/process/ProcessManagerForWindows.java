@@ -1,5 +1,6 @@
 package com.example.process;
 
+import com.example.process.dto.ProcessDto;
 import com.example.process.dto.ProcessDtoForWindows;
 
 import java.io.IOException;
@@ -21,8 +22,8 @@ public class ProcessManagerForWindows implements ProcessManager{
      * @return List<ProcessDtoForWindows>
      */
     @Override
-    public List<ProcessDtoForWindows> getProcessList() {
-        Process p = null;
+    public List<ProcessDto> getProcessList() {
+        Process p;
         Stream<String> stream = null;
         try {
             // コマンドの結果を取得
@@ -41,7 +42,7 @@ public class ProcessManagerForWindows implements ProcessManager{
         lines.remove(0);
 
         // プロセスのdtoリストを作成する
-        List<ProcessDtoForWindows> processList = new ArrayList<>();
+        List<ProcessDto> processList = new ArrayList<>();
         lines.forEach(e -> processList.add(convertDto(e, splitPoint)));
 
         return processList;

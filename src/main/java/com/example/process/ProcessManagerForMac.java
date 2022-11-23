@@ -1,9 +1,10 @@
 package com.example.process;
 
+import com.example.process.dto.ProcessDto;
 import com.example.process.dto.ProcessDtoForMac;
-import com.example.process.dto.ProcessDtoForWindows;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -13,16 +14,17 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ProcessManagerForMac implements ProcessManager{
-    public static void main(String[] args) throws Exception {
-        run();
-    }
-
-    public static void run() throws Exception {
-        // ProcessBuilderのインスタンスを作成
+    @Override
+    public List<ProcessDto> getProcessList() {
         ProcessBuilder pb = new ProcessBuilder();
 
         // psコマンドの結果を取得
-        Process p = pb.command("ps", "au").start();
+        Process p;
+        try {
+            p = pb.command(ProcessManager.getProcessCommand()).start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         InputStream is = p.getInputStream();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
@@ -30,21 +32,20 @@ public class ProcessManagerForMac implements ProcessManager{
         // 全行をstreamで取得
         Stream<String> stream = br.lines();
         // header行を削除
-        List<ProcessDtoForMac> dtoList = new ArrayList<>();
+        List<ProcessDto> dtoList = new ArrayList<>();
         AtomicInteger index = new AtomicInteger();
         stream.forEach(e -> {
             // headerは処理を飛ばす
             if (index.get() != 0) {
-                dtoList.add(scanLine(e));
+                dtoList.add(convertDto(e));
             }
             index.getAndIncrement();
         });
-        System.out.println(dtoList);
+        return dtoList;
     }
 
     // 一行を読み込んでDtoに変換する
-    private static ProcessDtoForMac scanLine(String line) {
-        ProcessDtoForMac dto = new ProcessDtoForMac();
+    private static ProcessDtoForMac convertDto(String line) {
         IntStream is = line.chars();
         StringBuilder sb = new StringBuilder();
         List<String> tmpList = new ArrayList<>();
@@ -63,16 +64,31 @@ public class ProcessManagerForMac implements ProcessManager{
         tmpList.add(sb.toString());
         sb.delete(0, sb.length());
 
-        // 検証用コード
-        tmpList.forEach(System.out::println);
-//        System.out.println(sb.toString());
-//        System.out.println(line);
-//        System.out.println(offset);
+        // dtoに詰め替え
+        ProcessDtoForMac dto = new ProcessDtoForMac();
+        for (int i = 0; i < tmpList.size(); i++) {
+            setColumn(tmpList, i, dto);
+        }
+
         return dto;
     }
 
-    @Override
-    public List<ProcessDtoForWindows> getProcessList() {
-        return null;
+    /**
+     * 項目に応じた値をセットする
+     */
+    private static void setColumn(List<String> tmpList, int index, ProcessDtoForMac dto) {
+        switch (index) {
+            case 0 -> dto.setUser(tmpList.get(index));
+            case 1 -> dto.setPid(tmpList.get(index));
+            case 2 -> dto.setCpu(tmpList.get(index));
+            case 3 -> dto.setMem(tmpList.get(index));
+            case 4 -> dto.setVsz(tmpList.get(index));
+            case 5 -> dto.setRss(tmpList.get(index));
+            case 6 -> dto.setTt(tmpList.get(index));
+            case 7 -> dto.setStat(tmpList.get(index));
+            case 8 -> dto.setStarted(tmpList.get(index));
+            case 9 -> dto.setTime(tmpList.get(index));
+            case 10 -> dto.setCommand(tmpList.get(index));
+        }
     }
 }

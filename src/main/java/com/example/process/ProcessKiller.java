@@ -23,9 +23,9 @@ public class ProcessKiller {
         // イメージ毎にmapを作成
         Map<String, List<ProcessDto>> processMap = new TreeMap<>();
         manager.getProcessList().forEach(e -> {
-            List<ProcessDto> current = processMap.getOrDefault(e.getImageName(), new ArrayList<>());
+            List<ProcessDto> current = processMap.getOrDefault(e.getName(), new ArrayList<>());
             if (current.isEmpty()) {
-                processMap.put(e.getImageName(), current);
+                processMap.put(e.getName(), current);
             }
             current.add(e);
         });
