@@ -1,9 +1,12 @@
 package com.example.enums;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Getter
 public enum RomajiDictionary {
     XA_HIRAGANA(12353, "xa"),
     A_HIRAGANA(12354, "a"),
@@ -176,8 +179,8 @@ public enum RomajiDictionary {
     CHO_ON(12540, "-"),
     ;
 
-    final int code;
-    final String romaji;
+    private final int code;
+    private final String romaji;
 
     RomajiDictionary(int code, String romaji) {
         this.code = code;

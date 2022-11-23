@@ -4,6 +4,9 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * 端末情報をコンソールに出力する
+ */
 public class SystemChecker {
     public static void main(String[] args) {
         printHostName();
