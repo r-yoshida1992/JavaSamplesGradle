@@ -16,6 +16,7 @@ public class ProcessManager {
 
     /**
      * プロセス取得コマンドをOS毎に取得する
+     *
      * @return List<String>
      */
     public static List<String> getProcessCommand() {
@@ -27,6 +28,7 @@ public class ProcessManager {
 
     /**
      * killコマンドをOS毎に取得する
+     *
      * @param pid String
      * @return List<String>
      */
@@ -39,6 +41,7 @@ public class ProcessManager {
 
     /**
      * 全プロセスのリストを取得する
+     *
      * @return List<ProcessDto>
      */
     public static List<ProcessDto> getProcessList() {
@@ -53,7 +56,8 @@ public class ProcessManager {
 
     /**
      * 全プロセスを機能毎のMapとして取得する
-     * @return Map<String, List<ProcessDto>>
+     *
+     * @return Map<String, List < ProcessDto>>
      */
     public static Map<String, List<ProcessDto>> getProcessMap() {
         Map<String, List<ProcessDto>> processMap = new TreeMap<>();

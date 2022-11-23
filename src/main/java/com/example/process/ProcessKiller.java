@@ -5,7 +5,9 @@ import com.example.util.ColorText;
 import com.example.util.StringUtil;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,9 @@ public class ProcessKiller {
     }
 
     /**
-     * プロセスのkillを行う
+     * プロセスのkillを行う。
+     *
+     * @param processMap Map<String, List<ProcessDto>>
      */
     private static void killProcess(Map<String, List<ProcessDto>> processMap) {
         // プロセスを入力で選択させる
@@ -61,7 +65,9 @@ public class ProcessKiller {
     }
 
     /**
-     * プロセスのkill確認を行う
+     * プロセスkillの確認を行う
+     * @param targetKey String
+     * @return boolean
      */
     private static boolean killConfirm(String targetKey) {
         boolean checkResult = false;

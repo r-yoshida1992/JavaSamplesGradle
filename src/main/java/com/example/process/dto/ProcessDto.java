@@ -18,6 +18,7 @@ public abstract class ProcessDto {
 
     /**
      * OS毎にインスタンス取得
+     *
      * @return ProcessDto
      */
     public static ProcessDto getInstance() {
@@ -31,14 +32,16 @@ public abstract class ProcessDto {
 
     /**
      * 項目をセットする
-     * @param tmpList　List<String>
-     * @param index　int
-     * @param dto　ProcessDto
+     *
+     * @param tmpList 　List<String>
+     * @param index   　int
+     * @param dto     　ProcessDto
      */
     abstract public void setColumn(List<String> tmpList, int index, ProcessDto dto);
 
     /**
      * プロセスコマンドの出力結果をDtoのListに変換する
+     *
      * @param stream Stream<String>
      * @return List<ProcessDto>
      */
@@ -47,6 +50,7 @@ public abstract class ProcessDto {
     /**
      * プロセスコマンドの出力結果をDtoのListに変換する
      * ※ MacとLinuxは処理が同様なのでここに定義してそれぞれで呼び出す
+     *
      * @param stream Stream<String>
      * @return List<ProcessDto>
      */

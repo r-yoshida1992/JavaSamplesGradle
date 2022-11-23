@@ -17,7 +17,7 @@ public class OsUtil {
         }
     }
 
-    public static String getCharSet(){
+    public static String getCharSet() {
         if (judgeOs() == OperationSystem.WINDOWS) {
             return "Shift-JIS";
         } else {
