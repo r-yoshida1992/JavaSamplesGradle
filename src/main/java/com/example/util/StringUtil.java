@@ -1,6 +1,10 @@
 package com.example.util;
 
 import java.nio.charset.Charset;
+import java.util.function.BiFunction;
+
+import static com.example.constants.Charsets.SJIS;
+import static com.example.constants.Charsets.UTF_8;
 
 public class StringUtil {
 
@@ -30,24 +34,25 @@ public class StringUtil {
     }
 
     /**
-     * スネークケースをキャメルケースに変換する
+     * スネークケースからキャメルケースの文字列に変換する
      */
-    public static String snakeToCamel(String snakeCaseStr) {
-        StringBuilder sb = new StringBuilder();
-        boolean isNextUpper = false;
-        for (char c : snakeCaseStr.toCharArray()) {
-            if (c == '_') {
-                isNextUpper = true;
+    public static String snakeToCamel(String snake, boolean isFirstCharLower) {
+        // スネークケースでない場合は小文字にして返却
+        if (!snake.contains("_")) {
+            return snake.toLowerCase();
+        }
+        String[] splitWord = snake.split("_");
+        StringBuilder camel = new StringBuilder();
+        for (String s : splitWord) {
+            // 区切り文字の連結などの場合、length = 0となる為ため、無視。
+            if (s.length() == 0) {
                 continue;
             }
-            if (isNextUpper) {
-                sb.append(toUpperCaseChar(c));
-                isNextUpper = false;
-            } else {
-                sb.append(sb.length() == 0 ? toUpperCaseChar(c) : toLowerCaseChar(c));
-            }
+            camel.append(camel.length() == 0 && isFirstCharLower
+                    ? s.toLowerCase()
+                    : concat(s.substring(0, 1).toUpperCase(), s.substring(1).toLowerCase()));
         }
-        return sb.toString();
+        return camel.toString();
     }
 
     /**
@@ -83,6 +88,20 @@ public class StringUtil {
      */
     public static String changeCharset(String str, Charset srcCharset, Charset destCharset) {
         return new String(str.getBytes(srcCharset), destCharset);
+    }
+
+    /**
+     * sjisに変換
+     */
+    public static String convertSJis(String str, Charset srcCharset) {
+        return changeCharset(str, srcCharset, SJIS);
+    }
+
+    /**
+     * utf-8に変換
+     */
+    public static String convertUtf8(String str, Charset srcCharset) {
+        return changeCharset(str, srcCharset, UTF_8);
     }
 
 }
