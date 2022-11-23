@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 public class LineNotify {
@@ -29,7 +30,7 @@ public class LineNotify {
             connection.setRequestMethod("POST");
             connection.addRequestProperty("Authorization", "Bearer " + token);
             try (OutputStream os = connection.getOutputStream(); PrintWriter writer = new PrintWriter(os)) {
-                writer.append("message=").append(URLEncoder.encode(message, "UTF-8")).flush();
+                writer.append("message=").append(URLEncoder.encode(message, StandardCharsets.UTF_8)).flush();
                 try (InputStream is = connection.getInputStream();
                      BufferedReader r = new BufferedReader(new InputStreamReader(is))) {
                     String res = r.lines().collect(Collectors.joining());
