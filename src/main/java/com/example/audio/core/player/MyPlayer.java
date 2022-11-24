@@ -112,32 +112,6 @@ public class MyPlayer {
     }
 
     /**
-     * Returns the completed status of this player.
-     *
-     * @return true if all available MPEG audio frames have been
-     * decoded, or false otherwise.
-     */
-    public synchronized boolean isComplete() {
-        return complete;
-    }
-
-    /**
-     * Retrieves the position in milliseconds of the current audio
-     * sample being played. This method delegates to the <code>
-     * AudioDevice</code> that is used by this player to sound
-     * the decoded audio samples.
-     */
-    public int getPosition() {
-        int position = lastPosition;
-
-        AudioDevice out = audio;
-        if (out != null) {
-            position = out.getPosition();
-        }
-        return position;
-    }
-
-    /**
      * Decodes a single frame.
      *
      * @return true if there are no more frames to decode, false otherwise.
@@ -166,10 +140,8 @@ public class MyPlayer {
             }
 
             bitstream.closeFrame();
-        } catch (RuntimeException | BitstreamException ex) {
+        } catch (RuntimeException ex) {
             throw new JavaLayerException("Exception decoding audio frame", ex);
-        } catch (DecoderException e) {
-            e.printStackTrace();
         }
 
         return true;
