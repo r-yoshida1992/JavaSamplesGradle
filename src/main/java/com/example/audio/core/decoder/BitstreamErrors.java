@@ -37,11 +37,6 @@ public interface BitstreamErrors extends JavaLayerErrors {
     int UNKNOWN_ERROR = BITSTREAM_ERROR + 0;
 
     /**
-     * The header describes an unknown sample rate.
-     */
-    int UNKNOWN_SAMPLE_RATE = BITSTREAM_ERROR + 1;
-
-    /**
      * A problem occurred reading from the stream.
      */
     int STREAM_ERROR = BITSTREAM_ERROR + 2;
@@ -61,8 +56,4 @@ public interface BitstreamErrors extends JavaLayerErrors {
      */
     int INVALIDFRAME = BITSTREAM_ERROR + 5;
 
-    /**
-     *
-     */
-    int BITSTREAM_LAST = 0x1ff;
 }
