@@ -81,14 +81,6 @@ public class WaveFile extends RiffFile {
         }
     }
 
-    public static class WaveFileSample {
-        public short[] chan;
-
-        public WaveFileSample() {
-            chan = new short[WaveFile.MAX_WAVE_CHANNELS];
-        }
-    }
-
     private WaveFormat_Chunk wave_format;
     private RiffChunkHeader pcm_data;
     private long pcm_data_offset = 0;  // offset of 'pcm_data' in output file
@@ -127,12 +119,6 @@ public class WaveFile extends RiffFile {
 
             if (retcode == DDC_SUCCESS) {
                 // Ecriture de wave_format
-                retcode = Write(wave_format.header, 8);
-                retcode = Write(wave_format.data.wFormatTag, 2);
-                retcode = Write(wave_format.data.nChannels, 2);
-                retcode = Write(wave_format.data.nSamplesPerSec, 4);
-                retcode = Write(wave_format.data.nAvgBytesPerSec, 4);
-                retcode = Write(wave_format.data.nBlockAlign, 2);
                 retcode = Write(wave_format.data.nBitsPerSample, 2);
 
 

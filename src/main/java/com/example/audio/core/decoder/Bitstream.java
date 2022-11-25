@@ -209,20 +209,6 @@ public final class Bitstream implements BitstreamErrors {
     }
 
     /**
-     * Return raw ID3v2 frames + header.
-     *
-     * @return ID3v2 InputStream or null if ID3v2 frames are not available.
-     */
-    public InputStream getRawID3v2() {
-        if (rawid3v2 == null)
-            return null;
-        else {
-            ByteArrayInputStream bain = new ByteArrayInputStream(rawid3v2);
-            return bain;
-        }
-    }
-
-    /**
      * Close the Bitstream.
      *
      * @throws BitstreamException
@@ -344,18 +330,6 @@ public final class Bitstream implements BitstreamErrors {
         }
 
         return sync;
-    }
-
-    // REVIEW: this class should provide inner classes to
-    // parse the frame contents. Eventually, readBits will
-    // be removed.
-    public int readBits(int n) {
-        return get_bits(n);
-    }
-
-    public int readCheckedBits(int n) {
-        // REVIEW: implement CRC check.
-        return get_bits(n);
     }
 
     BitstreamException newBitstreamException(int errorcode) {

@@ -348,61 +348,11 @@ public final class Header {
     }
 
     /**
-     * Returns Copyright.
-     */
-    public boolean copyright() {
-        return h_copyright;
-    }
-
-    /**
-     * Returns Original.
-     */
-    public boolean original() {
-        return h_original;
-    }
-
-    /**
-     * Return VBR.
-     *
-     * @return true if VBR header is found
-     */
-    public boolean vbr() {
-        return h_vbr;
-    }
-
-    /**
-     * Return VBR scale.
-     *
-     * @return scale of -1 if not available
-     */
-    public int vbr_scale() {
-        return h_vbr_scale;
-    }
-
-    /**
-     * Return VBR TOC.
-     *
-     * @return vbr toc ot null if not available
-     */
-    public byte[] vbr_toc() {
-        return h_vbr_toc;
-    }
-
-    /**
      * Returns Checksum flag.
      * Compares computed checksum with stream checksum.
      */
     public boolean checksum_ok() {
         return (checksum == crc.checksum());
-    }
-
-    // Seeking and layer III stuff
-
-    /**
-     * Returns Layer III Padding bit.
-     */
-    public boolean padding() {
-        return h_padding_bit != 0;
     }
 
     /**
@@ -497,20 +447,6 @@ public final class Header {
     }
 
     /**
-     * Returns the maximum number of frames in the stream.
-     *
-     * @param streamSize stream size
-     * @return number of frames
-     */
-    public int min_number_of_frames(int streamSize) { // E.B
-        if (h_vbr) return h_vbr_frames;
-        else {
-            if ((framesize + 5 - h_padding_bit) == 0) return 0;
-            else return (streamSize / (framesize + 5 - h_padding_bit));
-        }
-    }
-
-    /**
      * Returns ms/frame.
      *
      * @return milliseconds per frame
@@ -529,25 +465,6 @@ public final class Header {
             return (ms_per_frame_array[h_layer - 1][h_sample_frequency]);
         }
     }
-
-    /**
-     * Returns total ms.
-     *
-     * @param streamSize stream size
-     * @return total milliseconds
-     */
-    public float total_ms(int streamSize) { // E.B
-        return (max_number_of_frames(streamSize) * ms_per_frame());
-    }
-
-    /**
-     * Returns synchronized header.
-     */
-    public int getSyncHeader() { // E.B
-        return _headerstring;
-    }
-
-    // functions which return header information as strings:
 
     /**
      * Return Layer version.
@@ -626,16 +543,6 @@ public final class Header {
         if (h_vbr) {
             return ((int) ((h_vbr_bytes * 8) / (ms_per_frame() * h_vbr_frames))) * 1000;
         } else return bitrates[h_version][h_layer - 1][h_bitrate_index];
-    }
-
-    /**
-     * Return Instant Bitrate.
-     * Bitrate for VBR is not constant.
-     *
-     * @return bitrate in bps
-     */
-    public int bitrate_instant() {
-        return bitrates[h_version][h_layer - 1][h_bitrate_index];
     }
 
     /**

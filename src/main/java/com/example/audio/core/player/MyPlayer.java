@@ -33,13 +33,6 @@ public class MyPlayer {
     private boolean closed = false;
 
     /**
-     * Has the player played back all frames from the stream?
-     */
-    private boolean complete = false;
-
-    private int lastPosition = 0;
-
-    /**
      * Creates a new <code>Player</code> instance.
      */
     public MyPlayer(InputStream stream) throws JavaLayerException {
@@ -83,7 +76,6 @@ public class MyPlayer {
             if (out != null) {
                 out.flush();
                 synchronized (this) {
-                    complete = (!closed);
                     close();
                 }
             }
@@ -103,7 +95,6 @@ public class MyPlayer {
             // this may fail, so ensure object state is set up before
             // calling this method.
             out.close();
-            lastPosition = out.getPosition();
             try {
                 bitstream.close();
             } catch (BitstreamException ex) {

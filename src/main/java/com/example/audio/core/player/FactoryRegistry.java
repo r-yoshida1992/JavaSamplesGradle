@@ -63,14 +63,6 @@ public class FactoryRegistry {
         factories.put(factory.getClass(), factory);
     }
 
-    public void removeFactoryType(Class<?> cls) {
-        factories.remove(cls);
-    }
-
-    public void removeFactory(AudioDeviceFactory factory) {
-        factories.remove(factory.getClass());
-    }
-
     /**
      * specify a factory
      * @since 1.0.2

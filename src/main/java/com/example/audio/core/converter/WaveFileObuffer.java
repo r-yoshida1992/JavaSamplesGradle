@@ -74,11 +74,6 @@ public class WaveFileObuffer extends Obuffer {
         bufferp[channel] += (short) channels;
     }
 
-    /**
-     * Write the samples to the file (Random Acces).
-     */
-    short[] myBuffer = new short[2];
-
     public void write_buffer(int val) {
 
         int k = 0;
@@ -99,26 +94,4 @@ public class WaveFileObuffer extends Obuffer {
     public void clear_buffer() {
     }
 
-    /**
-     *
-     */
-    public void set_stop_flag() {
-    }
-
-  /*
-   * Create STDOUT buffer
-   *
-   *
-  public static Obuffer create_stdout_obuffer(MPEG_Args maplay_args)
-  {
-      Obuffer thebuffer = null;
-    int mode = maplay_args.MPEGheader.mode();
-    int which_channels = maplay_args.which_c;
-     if (mode == Header.single_channel || which_channels != MPEG_Args.both)
-        thebuffer = new FileObuffer(1,maplay_args.output_filename);
-     else
-        thebuffer = new FileObuffer(2,maplay_args.output_filename);
-     return(thebuffer);
-  }
-  */
 }

@@ -34,7 +34,6 @@ public class SampleBuffer extends Obuffer {
     private short[] buffer;
     private int[] bufferp;
     private int channels;
-    private int frequency;
 
     /**
      * Constructor
@@ -43,18 +42,9 @@ public class SampleBuffer extends Obuffer {
         buffer = new short[OBUFFERSIZE];
         bufferp = new int[MAXCHANNELS];
         channels = number_of_channels;
-        frequency = sample_frequency;
 
         for (int i = 0; i < number_of_channels; ++i)
             bufferp[i] = (short) i;
-    }
-
-    public int getChannelCount() {
-        return this.channels;
-    }
-
-    public int getSampleFrequency() {
-        return this.frequency;
     }
 
     public short[] getBuffer() {
