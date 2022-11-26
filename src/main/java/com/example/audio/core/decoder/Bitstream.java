@@ -99,11 +99,6 @@ public final class Bitstream implements BitstreamErrors {
     private int syncword;
 
     /**
-     * Audio header position in stream.
-     */
-    private int header_pos = 0;
-
-    /**
      *
      */
     private boolean single_ch_mode;
@@ -144,15 +139,6 @@ public final class Bitstream implements BitstreamErrors {
     }
 
     /**
-     * Return position of the first audio header.
-     *
-     * @return size of ID3v2 tag frames.
-     */
-    public int header_pos() {
-        return header_pos;
-    }
-
-    /**
      * Load ID3v2 frames.
      *
      * @param in MP3 InputStream.
@@ -164,7 +150,6 @@ public final class Bitstream implements BitstreamErrors {
             // Read ID3v2 header (10 bytes).
             in.mark(10);
             size = readID3v2Header(in);
-            header_pos = size;
         } catch (IOException e) {
         } finally {
             try {
@@ -319,17 +304,11 @@ public final class Bitstream implements BitstreamErrors {
         } catch (IOException ex) {
         }
 
-        boolean sync = false;
-        switch (read) {
-        case 0:
-            sync = true;
-            break;
-        case 4:
-            sync = isSyncMark(headerString, syncmode, syncword);
-            break;
-        }
-
-        return sync;
+        return switch (read) {
+            case 0 -> true;
+            case 4 -> isSyncMark(headerString, syncmode, syncword);
+            default -> false;
+        };
     }
 
     BitstreamException newBitstreamException(int errorcode) {

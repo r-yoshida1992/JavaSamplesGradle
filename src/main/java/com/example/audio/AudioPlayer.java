@@ -1,20 +1,28 @@
 package com.example.audio;
 
 import com.example.audio.core.player.MyPlayer;
+import javafx.application.Application;
+import javafx.application.ConditionalFeature;
+import javafx.stage.Stage;
 import javazoom.jl.player.Player;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Scanner;
 
-public class AudioPlayer {
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+public class AudioPlayer extends Application {
     static Player jlPlayer;
     static MyPlayer myPlayer;
 
     public static void main(String[] args) throws Exception {
 //        methodA();
 //        methodB();
-        methodC();
+//        methodC();
+        methodD();
     }
 
     public static void methodA() throws Exception {
@@ -91,7 +99,31 @@ public class AudioPlayer {
 
     }
 
+    // クラスメンバにしないとGCされる
+    static MediaPlayer mediaPlayer;
 
+    public static void methodD() throws Exception {
+        launch();
+        Scanner sc = new Scanner(System.in);
+        String line = sc.nextLine();
+        if ("get".equals(line)) {
+            p(mediaPlayer.getRate());
+        }
+    }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        String filename = "C:\\Users\\Administrator\\OneDrive\\music\\mp3\\変換\\Pool.mp3";
+        String url = new File(filename).toURI().toString();
+        System.out.println(url);
+        Media hit = new Media(new File(filename).toURI().toString());
+        mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.setRate(1.35);
+        mediaPlayer.play();
+    }
+
+    public static void p(Object o){
+        System.out.println(o);
+    }
 }
 

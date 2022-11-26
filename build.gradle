@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'com.example'
@@ -13,12 +15,35 @@ dependencies {
     implementation 'javazoom:jlayer:1.0.1'
     implementation 'mysql:mysql-connector-java:8.0.30'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+//    implementation 'javax.servlet:javax.servlet-api:4.0.1'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    //このruntimeOnly群はクロスプラットフォーム対応のjarを作るためのものです。
+    //不必要なものは消すとjarファイルのサイズを小さくできます。
+    runtimeOnly "org.openjfx:javafx-base:19:win"
+//    runtimeOnly "org.openjfx:javafx-base:19:linux"
+//    runtimeOnly "org.openjfx:javafx-base:19:mac"
+    runtimeOnly "org.openjfx:javafx-controls:19:win"
+//    runtimeOnly "org.openjfx:javafx-controls:19:linux"
+//    runtimeOnly "org.openjfx:javafx-controls:19:mac"
+    runtimeOnly "org.openjfx:javafx-fxml:19:win"
+//    runtimeOnly "org.openjfx:javafx-fxml:19:linux"
+//    runtimeOnly "org.openjfx:javafx-fxml:19:mac"
+//    runtimeOnly "org.openjfx:javafx-graphics:19:win"
+//    runtimeOnly "org.openjfx:javafx-graphics:19:linux"
+//    runtimeOnly "org.openjfx:javafx-graphics:19:mac"
+    runtimeOnly "org.openjfx:javafx-media:19:win"
+//    runtimeOnly "org.openjfx:javafx-media:19:linux"
+//    runtimeOnly "org.openjfx:javafx-media:19:mac"
 }
 
 test {
     useJUnitPlatform()
+}
+
+javafx {
+    version = "19"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
 }

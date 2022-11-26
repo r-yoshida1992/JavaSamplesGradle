@@ -68,12 +68,10 @@ public final class Header {
     private int h_mode;
     private int h_sample_frequency;
     private int h_number_of_subbands, h_intensity_stereo_bound;
-    private boolean h_copyright, h_original;
     // VBR support added by E.B
     private static final double[] h_vbr_time_per_frame = {-1, 384, 1152, 1152};
     private boolean h_vbr;
     private int h_vbr_frames;
-    private int h_vbr_scale;
     private int h_vbr_bytes;
     private byte[] h_vbr_toc;
 
@@ -83,8 +81,6 @@ public final class Header {
     public short checksum;
     public int framesize;
     public int nSlots;
-
-    private int _headerstring = -1; // E.B
 
     Header() {
     }
@@ -118,7 +114,6 @@ public final class Header {
         boolean sync = false;
         do {
             headerString = stream.syncHeader(syncmode);
-            _headerstring = headerString; // E.B
             if (syncmode == Bitstream.INITIAL_SYNC) {
                 h_version = ((headerString >>> 19) & 1);
                 if (((headerString >>> 20) & 1) == 0) // SZD: MPEG2.5 detection
@@ -140,10 +135,6 @@ public final class Header {
                 h_intensity_stereo_bound = (h_mode_extension << 2) + 4;
             else
                 h_intensity_stereo_bound = 0; // should never be used
-            if (((headerString >>> 3) & 1) == 1)
-                h_copyright = true;
-            if (((headerString >>> 2) & 1) == 1)
-                h_original = true;
             // calculate number of subbands:
             if (h_layer == 1)
                 h_number_of_subbands = 32;
@@ -228,7 +219,6 @@ public final class Header {
                 h_vbr = true;
                 h_vbr_frames = -1;
                 h_vbr_bytes = -1;
-                h_vbr_scale = -1;
                 h_vbr_toc = new byte[100];
 
                 int length = 4;
@@ -256,7 +246,6 @@ public final class Header {
                 // Read scale (if available).
                 if ((flags[3] & (byte) (1 << 3)) != 0) {
                     System.arraycopy(firstFrame, offset + length, tmp, 0, tmp.length);
-                    h_vbr_scale = (tmp[0] << 24) & 0xFF000000 | (tmp[1] << 16) & 0x00FF0000 | (tmp[2] << 8) & 0x0000FF00 | tmp[3] & 0x000000FF;
                     length += 4;
                 }
                 //System.out.println("VBR:"+xing+" Frames:"+ h_vbr_frames +" Size:"+h_vbr_bytes);
@@ -276,7 +265,6 @@ public final class Header {
                 h_vbr = true;
                 h_vbr_frames = -1;
                 h_vbr_bytes = -1;
-                h_vbr_scale = -1;
                 h_vbr_toc = new byte[100];
                 // Bytes.
                 int length = 4 + 6;

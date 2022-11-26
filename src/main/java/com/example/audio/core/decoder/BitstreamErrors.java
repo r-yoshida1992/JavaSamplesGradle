@@ -42,11 +42,6 @@ public interface BitstreamErrors extends JavaLayerErrors {
     int STREAM_ERROR = BITSTREAM_ERROR + 2;
 
     /**
-     * The end of the stream was reached prematurely.
-     */
-    int UNEXPECTED_EOF = BITSTREAM_ERROR + 3;
-
-    /**
      * The end of the stream was reached.
      */
     int STREAM_EOF = BITSTREAM_ERROR + 4;

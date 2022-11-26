@@ -90,25 +90,6 @@ public class Decoder implements DecoderErrors {
         }
     }
 
-    static public Params getDefaultParams() {
-        return (Params) DEFAULT_PARAMS.clone();
-    }
-
-    public void setEqualizer(Equalizer eq) {
-        if (eq == null)
-            eq = Equalizer.PASS_THRU_EQ;
-
-        equalizer.setFrom(eq);
-
-        float[] factors = equalizer.getBandFactors();
-
-        if (filter1 != null)
-            filter1.setEQ(factors);
-
-        if (filter2 != null)
-            filter2.setEQ(factors);
-    }
-
     /**
      * Decodes one frame from an MPEG audio bitstream.
      *
@@ -127,14 +108,6 @@ public class Decoder implements DecoderErrors {
         decoder.decodeFrame();
         output.write_buffer(1);
         return output;
-    }
-
-    /**
-     * Changes the output buffer. This will take effect the next time
-     * decodeFrame() is called.
-     */
-    public void setOutputBuffer(Obuffer out) {
-        output = out;
     }
 
     /**
@@ -159,25 +132,6 @@ public class Decoder implements DecoderErrors {
      */
     public int getOutputChannels() {
         return outputChannels;
-    }
-
-    /**
-     * Retrieves the maximum number of samples that will be written to
-     * the output buffer when one frame is decoded. This can be used to
-     * help calculate the size of other buffers whose size is based upon
-     * the number of samples written to the output buffer. NB: this is
-     * an upper bound and fewer samples may actually be written, depending
-     * upon the sample rate and number of channels.
-     *
-     * @return The maximum number of samples that are written to the
-     * output buffer when decoding a single frame of MPEG audio.
-     */
-    public int getOutputBlockSize() {
-        return Obuffer.OBUFFERSIZE;
-    }
-
-    protected DecoderException newDecoderException(int errorCode) {
-        return new DecoderException(errorCode, null);
     }
 
     protected DecoderException newDecoderException(int errorCode, Throwable throwable) {
@@ -250,8 +204,6 @@ public class Decoder implements DecoderErrors {
      * Instances of this class are not thread safe.
      */
     public static class Params implements Cloneable {
-        private OutputChannels outputChannels = OutputChannels.BOTH;
-
         private Equalizer equalizer = new Equalizer();
 
         public Params() {
@@ -263,17 +215,6 @@ public class Decoder implements DecoderErrors {
             } catch (CloneNotSupportedException ex) {
                 throw new InternalError(this + ": " + ex);
             }
-        }
-
-        public void setOutputChannels(OutputChannels out) {
-            if (out == null)
-                throw new NullPointerException("out");
-
-            outputChannels = out;
-        }
-
-        public OutputChannels getOutputChannels() {
-            return outputChannels;
         }
 
         /**

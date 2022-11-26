@@ -41,8 +41,6 @@ public final class Equalizer {
      */
     static public final float BAND_NOT_PRESENT = Float.NEGATIVE_INFINITY;
 
-    static public final Equalizer PASS_THRU_EQ = new Equalizer();
-
     private static final int BANDS = 32;
 
     private final float[] settings = new float[BANDS];
@@ -51,14 +49,6 @@ public final class Equalizer {
      * Creates a new <code>Equalizer</code> instance.
      */
     public Equalizer() {
-    }
-
-    public Equalizer(float[] settings) {
-        setFrom(settings);
-    }
-
-    public Equalizer(EQFunction eq) {
-        setFrom(eq);
     }
 
     public void setFrom(float[] eq) {
@@ -96,37 +86,6 @@ public final class Equalizer {
         for (int i = 0; i < BANDS; i++) {
             settings[i] = 0.0f;
         }
-    }
-
-    /**
-     * Retrieves the number of bands present in this equalizer.
-     */
-    public int getBandCount() {
-        return settings.length;
-    }
-
-    public float setBand(int band, float neweq) {
-        float eq = 0.0f;
-
-        if ((band >= 0) && (band < BANDS)) {
-            eq = settings[band];
-            settings[band] = limit(neweq);
-        }
-
-        return eq;
-    }
-
-    /**
-     * Retrieves the eq setting for a given band.
-     */
-    public float getBand(int band) {
-        float eq = 0.0f;
-
-        if ((band >= 0) && (band < BANDS)) {
-            eq = settings[band];
-        }
-
-        return eq;
     }
 
     private float limit(float eq) {

@@ -28,11 +28,6 @@ public class MyPlayer {
     private AudioDevice audio;
 
     /**
-     * Has the player been closed?
-     */
-    private boolean closed = false;
-
-    /**
      * Creates a new <code>Player</code> instance.
      */
     public MyPlayer(InputStream stream) throws JavaLayerException {
@@ -90,7 +85,6 @@ public class MyPlayer {
     public synchronized void close() {
         AudioDevice out = audio;
         if (out != null) {
-            closed = true;
             audio = null;
             // this may fail, so ensure object state is set up before
             // calling this method.
