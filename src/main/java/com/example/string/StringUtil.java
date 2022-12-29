@@ -1,6 +1,7 @@
-package com.example.util;
+package com.example.string;
 
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.function.BiFunction;
 
 import static com.example.constants.Charsets.SJIS;
@@ -102,6 +103,13 @@ public class StringUtil {
      */
     public static String convertUtf8(String str, Charset srcCharset) {
         return changeCharset(str, srcCharset, UTF_8);
+    }
+
+    /**
+     * 文字列の繰り返し
+     */
+    public static String repeat(String str, int repeatCnt) {
+        return String.join("", Collections.nCopies(repeatCnt, str));
     }
 
 }
